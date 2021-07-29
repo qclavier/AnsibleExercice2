@@ -21,24 +21,21 @@
       dest: /home/sources
   # module pour monter l'image de result
   - name: Construction de l'image result
-    community.docker.docker_image:
-        build:
-            path: /fichiers_sources/result/
+    docker_image:
+        dockerfile: present
         name: img_result
+        path: /fichiers_sources/result/
   # module pour monter l'image de vote
   - name: Construction de l'image vote
-    community.docker.docker_image:
-        build:
-            dockerfile: present
-            path: /fichiers_sources/vote/
+    docker_image:
+        dockerfile: present
         name: img_vote
+        path: /fichiers_sources/vote/
   # module pour monter l'image de worker
   - name: Construction de l'image worker
-    community.docker.docker_image:
-        build:
-            dockerfile: present
-            path: /fichiers_sources/worker/
-            name: worker
+    docker_image:
+        dockerfile: present
         name: img_worker
+        path: /fichiers_sources/worker/
   # module pour supprimer les fichiers sources
   - name: Suppression fichiers sources
