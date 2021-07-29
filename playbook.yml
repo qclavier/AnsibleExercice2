@@ -25,17 +25,20 @@
         dockerfile: present
         name: img_result
         path: /fichiers_sources/result/
+        rm: yes
   # module pour monter l'image de vote
   - name: Construction de l'image vote
     docker_image:
         dockerfile: present
         name: img_vote
         path: /fichiers_sources/vote/
+        rm: yes
   # module pour monter l'image de worker
   - name: Construction de l'image worker
     docker_image:
         dockerfile: present
         name: img_worker
         path: /fichiers_sources/worker/
-  # module pour supprimer les fichiers sources
-  - name: Suppression fichiers sources
+        rm: yes
+#   # module pour supprimer les fichiers sources
+#   - name: Suppression fichiers sources
