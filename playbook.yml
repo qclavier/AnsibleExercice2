@@ -1,0 +1,29 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  # module pour installer docker
+  - name: install docker
+    apt:
+      name:
+        - docker
+      update_cache: yes
+  # module pour créer les dossier où stocker les fichier sources
+  - name: création des dossiers /home/sources
+    file:
+        path: /home/sources
+        mode: '0755'
+        state: directory
+  # module pour copier les fichiers sources
+  - name: copie des fichiers sources
+    copy: 
+      src: fichiers_sources/
+      dest: /home/sources
+  # module pour monter l'image de result
+  - name: 
+  # module pour monter l'image de vote
+  - name: 
+  # module pour monter l'image de worker
+  - name: 
+  # module pour supprimer les fichiers sources
+  - name: 

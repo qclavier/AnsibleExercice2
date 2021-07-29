@@ -1,0 +1,2 @@
+192.168.10.2 ansible_user=user-v2
+192.168.10.4 ansible_user=user-v3
