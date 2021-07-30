@@ -2,43 +2,74 @@
 - hosts: all
   become: true
   tasks:
-  # module pour installer docker
-  - name: install docker
+  # module installation pré-requis Docker
+  - name: pre-install docker
+    command:
+      apt:
+        - apt-transport-https
+        - ca-certififcates
+        - curl
+        - gnups
+        - lsbrelease
+      update_cache: yes
+
+  # ajout des clefs gpg pour la sécurité des échanges avec le serveur de packages Docker
+  - name: clef gpg
+    apt-key:
+      url: https://download.docker.com/linux/debian/gpg
+
+  # module pour ajouter le repos pour chercher les packages de docker
+  - name: ajout de l'adresse du sepos pour le packages docker de debian
+    apt-repository:
+      repo: deb https://download.docker.com/linux/debian/ bionic stable
+
+  # module pour installer les composants docker
+  - name: install docker components
     apt:
       name:
         - docker
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
       update_cache: yes
+
   # module pour créer les dossier où stocker les fichier sources
   - name: création des dossiers /home/sources
     file:
         path: /home/sources
         mode: '0755'
         state: directory
+
   # module pour copier les fichiers sources
   - name: copie des fichiers sources
     copy: 
       src: fichiers_sources/
       dest: /home/sources
+
   # module pour monter l'image de result
   - name: Construction de l'image result
     docker_image:
         dockerfile: present
         name: img_result
         path: /fichiers_sources/result/
-        rm: yes
+        rm: yes #suppresion fichier source de result
+
   # module pour monter l'image de vote
   - name: Construction de l'image vote
     docker_image:
         dockerfile: present
         name: img_vote
         path: /fichiers_sources/vote/
-        rm: yes
+        rm: yes #suppresion fichier source de vote
+
   # module pour monter l'image de worker
   - name: Construction de l'image worker
     docker_image:
         dockerfile: present
         name: img_worker
         path: /fichiers_sources/worker/
-        rm: yes
-#   # module pour supprimer les fichiers sources
-#   - name: Suppression fichiers sources
+        rm: yes #suppresion fichier source de worker
+
+  # module pour supprimer le dossier des fichiers sources
+  - name: Suppression dossier fichiers sources
+    cmd: "cd /home && rm -rf /sources"
