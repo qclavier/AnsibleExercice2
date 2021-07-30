@@ -19,9 +19,8 @@
   - name: Construction de l'image result
     docker_image:
         name: img_{{item}}
-        build:
-            path: /fichiers_sources/{{item}}/
-            source: build
+        path: /fichiers_sources/{{item}}/
+        source: build
     loop:
         - result
         - vote
