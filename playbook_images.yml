@@ -3,9 +3,9 @@
   become: true
   tasks:
   # module pour créer les dossier où stocker les fichier sources
-  - name: création des dossiers /home/sources
+  - name: création des dossiers /sources
     file:
-        path: /home/sources
+        path: /sources
         mode: '0755'
         state: directory
 
@@ -13,31 +13,20 @@
   - name: copie des fichiers sources
     copy: 
       src: fichiers_sources/
-      dest: /home/sources
+      dest: /sources/
 
-  # module pour monter l'image de result
+  # module pour monter les images : result, vote et worker
   - name: Construction de l'image result
     docker_image:
-        dockerfile: present
-        name: img_result
-        path: /fichiers_sources/result/
-        rm: yes #suppresion fichier source de result
+        name: img_{{item}}
+        build:
+            path: /fichiers_sources/{{item}}/
+            source: build
+    loop:
+        - result
+        - vote
+        - worker
 
-  # module pour monter l'image de vote
-  - name: Construction de l'image vote
-    docker_image:
-        dockerfile: present
-        name: img_vote
-        path: /fichiers_sources/vote/
-        rm: yes #suppresion fichier source de vote
-
-  # module pour monter l'image de worker
-  - name: Construction de l'image worker
-    docker_image:
-        dockerfile: present
-        name: img_worker
-        path: /fichiers_sources/worker/
-        rm: yes #suppresion fichier source de worker
-  # # module pour supprimer le dossier des fichiers sources
-  # - name: Suppression dossier fichiers sources
-  #   cmd: "cd /home/bigchief/AnsibleExercice2 && rm -rf /fichiers_source"
+    # module pour supprimer le dossier des fichiers sources
+  - name: Suppression dossier fichiers sources
+    cmd: "rm -rf /fichiers_source/"
