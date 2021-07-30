@@ -11,7 +11,10 @@
         - curl
         - gnups
         - lsbrelease
-      update_cache: yes
+  
+  # module mise à jour
+  - name: update et upgrade
+    cmd: "sudo apt update && sudo apt upgrade -y"
 
   # ajout des clefs gpg pour la sécurité des échanges avec le serveur de packages Docker
   - name: ajout clef gpg
@@ -31,7 +34,10 @@
         - docker-ce
         - docker-ce-cli
         - containerd.io
-      update_cache: yes
+
+  # module mise à jour
+  - name: update et upgrade
+    cmd: "sudo apt update && sudo apt upgrade -y"
 
   # module pour créer les dossier où stocker les fichier sources
   - name: création des dossiers /home/sources
