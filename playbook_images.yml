@@ -26,4 +26,4 @@
 
     # module pour supprimer le dossier des fchiers sources
   - name: Suppression dossier fichiers sources
-    cmd: "rm -rf /sources/"
+    command: rm -rf /sources/
