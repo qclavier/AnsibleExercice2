@@ -18,7 +18,7 @@
 
   # module pour monter les images : result, vote et worker
   - name: Construction de l'image result
-    command : docker build -t {{item}} /fichiers_sources/{{item}}/.
+    command : docker build -t {{item}} /sources/{{item}}/.
     loop:
         - result
         - vote
