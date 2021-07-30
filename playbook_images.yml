@@ -20,7 +20,6 @@
     docker_image:
         name: img_{{item}}
         path: /fichiers_sources/{{item}}/
-        source: build
     loop:
         - result
         - vote
