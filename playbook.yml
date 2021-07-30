@@ -2,33 +2,74 @@
 - hosts: all
   become: true
   tasks:
-  # module installation pré-requis Docker
-  - name: pre-install docker
-    command:
-      apt:
-        - apt-transport-https
-        - ca-certififcates
-        - curl
-        - gnups
-        - lsbrelease
-  
-  # module mise à jour
-  - name: update
-    cmd: 'sudo apt update'
+  - name: Update the apt package index
+    become: yes
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+      force_apt_get: yes
 
-  # module mise à jour
-  - name: upgrade
-    cmd: 'sudo apt upgrade -y'
+  - name: Install packages for apt add repository over HTTPS
+    become: yes
+    apt:
+      name: "{{ packagesdep }}"
+      force_apt_get: yes
+      state: latest
+      update_cache: yes
+    vars:
+      packagesdep:
+      - git
+      - apt-transport-https
+      - ca-certificates
+      - wget
+      - software-properties-common
+      - gnupg2
+      - curl
 
-  # ajout des clefs gpg pour la sécurité des échanges avec le serveur de packages Docker
-  - name: ajout clef gpg
+  - name: Add Apt signing key from official docker repo
     apt_key:
       url: https://download.docker.com/linux/debian/gpg
-
-  # module pour ajouter le repos pour chercher les packages de docker
-  - name: ajout de l'adresse du repos pour le packages docker de debian
+      state: present
+  - name: add docker official repository for Debian Stretch
     apt_repository:
-      repo: deb https://download.docker.com/linux/debian/ bionic stable
+      repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+      state: present
+  - name: Index new repo into the cache
+    become: yes
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+      force_apt_get: yes
+
+  # # module installation pré-requis Docker
+  # - name: pre-install docker
+  #   command:
+  #     apt:
+  #       - apt-transport-https
+  #       - ca-certififcates
+  #       - curl
+  #       - gnups
+  #       - lsbrelease
+  
+  # # module mise à jour
+  # - name: update
+  #   cmd: 'sudo apt update'
+
+  # # module mise à jour
+  # - name: upgrade
+  #   cmd: 'sudo apt upgrade -y'
+
+  # # ajout des clefs gpg pour la sécurité des échanges avec le serveur de packages Docker
+  # - name: ajout clef gpg
+  #   apt_key:
+  #     url: https://download.docker.com/linux/debian/gpg
+
+  # # module pour ajouter le repos pour chercher les packages de docker
+  # - name: ajout de l'adresse du repos pour le packages docker de debian
+  #   apt_repository:
+  #     repo: deb https://download.docker.com/linux/debian/ bionic stable
 
   # module pour installer les composants docker
   - name: install docker components
@@ -39,13 +80,13 @@
         - docker-ce-cli
         - containerd.io
 
-  # module mise à jour
-  - name: update
-    cmd: 'sudo apt update'
+  # # module mise à jour
+  # - name: update
+  #   cmd: 'sudo apt update'
 
-  # module mise à jour
-  - name: upgrade
-    cmd: 'sudo apt upgrade -y'
+  # # module mise à jour
+  # - name: upgrade
+  #   cmd: 'sudo apt upgrade -y'
 
   # module pour créer les dossier où stocker les fichier sources
   - name: création des dossiers /home/sources
