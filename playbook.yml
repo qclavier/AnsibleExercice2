@@ -69,6 +69,6 @@
         name: img_worker
         path: /fichiers_sources/worker/
         rm: yes #suppresion fichier source de worker
-  # module pour supprimer le dossier des fichiers sources
-  - name: Suppression dossier fichiers sources
-    cmd: "cd /home/bigchief/AnsibleExercice2 && rm -rf /fichiers_source"
+  # # module pour supprimer le dossier des fichiers sources
+  # - name: Suppression dossier fichiers sources
+  #   cmd: "cd /home/bigchief/AnsibleExercice2 && rm -rf /fichiers_source"
