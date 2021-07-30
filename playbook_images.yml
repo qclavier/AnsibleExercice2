@@ -24,6 +24,6 @@
         - vote
         - worker
 
-    # module pour supprimer le dossier des fichiers sources
-#   - name: Suppression dossier fichiers sources
-#     cmd: "rm -rf /fichiers_source/"
+    # module pour supprimer le dossier des fchiers sources
+  - name: Suppression dossier fichiers sources
+    cmd: "rm -rf /sources/"
