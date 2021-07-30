@@ -27,5 +27,5 @@
         - worker
 
     # module pour supprimer le dossier des fichiers sources
-  - name: Suppression dossier fichiers sources
-    cmd: "rm -rf /fichiers_source/"
+#   - name: Suppression dossier fichiers sources
+#     cmd: "rm -rf /fichiers_source/"
