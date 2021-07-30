@@ -12,8 +12,8 @@
   # module pour copier les fichiers sources
   - name: copie des fichiers sources
     copy: 
-      src: fichiers_sources/
-      dest: /sources
+      src: ./fichiers_sources/
+      dest: /sources/
 
   # module pour monter les images : result, vote et worker
   - name: Construction de l'image result
