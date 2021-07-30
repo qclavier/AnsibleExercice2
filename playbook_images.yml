@@ -8,6 +8,7 @@
         path: /sources
         mode: '0755'
         state: directory
+        recurse: yes
 
   # module pour copier les fichiers sources
   - name: copie des fichiers sources
