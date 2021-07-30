@@ -19,8 +19,8 @@
       url: https://download.docker.com/linux/debian/gpg
 
   # module pour ajouter le repos pour chercher les packages de docker
-  - name: ajout de l'adresse du sepos pour le packages docker de debian
-    apt-repository:
+  - name: ajout de l'adresse du repos pour le packages docker de debian
+    apt_repository:
       repo: deb https://download.docker.com/linux/debian/ bionic stable
 
   # module pour installer les composants docker
